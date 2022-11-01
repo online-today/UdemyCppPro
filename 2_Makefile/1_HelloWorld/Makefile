@@ -9,7 +9,8 @@
 # The prerequisites are file names, separated by spaces.
 # 	These files need to exist before the commands for the target are run.
 build:
-	g++ main.cc -o main
+	g++ main.cc -c
+	g++ main.o -o main
 
 execute:
 	./main

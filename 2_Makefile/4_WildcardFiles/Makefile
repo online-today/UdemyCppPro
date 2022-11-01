@@ -1,29 +1,32 @@
+###############
+## VARIABLES ##
+###############
 DEBUG = 1
+EXECUTABLE_NAME = main
 
+CXX = g++
 CXX_STANDARD = c++17
 CXX_WARNINGS = -Wall -Wextra -Wpedantic
-CXX = g++
 CXXFLAGS = $(CXX_WARNINGS) -std=$(CXX_STANDARD)
+CPPFLAGS =
 LDFLAGS =
 
 ifeq ($(DEBUG), 1)
 CXXFLAGS += -g -O0
-EXECUTABLE_NAME = mainDebug
 else
 CXXFLAGS += -O3
-EXECUTABLE_NAME = mainRelease
 endif
 
-CXX_COMPILER_CALL = $(CXX) $(CXXFLAGS)
+COMPILER_CALL = $(CXX) $(CXXFLAGS)
 
 CXX_SOURCES = $(wildcard *.cc)
 CXX_OBJECTS = $(patsubst %.cc, %.o, $(CXX_SOURCES))
 
-##############
-## TARGETS  ##
-##############
+###############
+## TARGETS   ##
+###############
 build: $(CXX_OBJECTS)
-	$(CXX_COMPILER_CALL) $(CXX_OBJECTS) $(LDFLAGS) -o $(EXECUTABLE_NAME)
+	$(COMPILER_CALL) $(CXX_OBJECTS) -o $(EXECUTABLE_NAME)
 
 execute:
 	./$(EXECUTABLE_NAME)
@@ -35,5 +38,7 @@ clean:
 ##############
 ## PATTERNS ##
 ##############
+# $@: the file name of the target
+# $<: the name of the first dependency
 %.o: %.cc
-	$(CXX_COMPILER_CALL) -c $< -o $@
+	$(COMPILER_CALL) -c $< -o $@
