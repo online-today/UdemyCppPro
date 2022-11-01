@@ -1,3 +1,6 @@
+###############
+## VARIABLES ##
+###############
 DEBUG ?= 1
 ENABLE_WARNINGS ?= 1
 WARNINGS_AS_ERRORS ?= 0
@@ -11,12 +14,13 @@ CXX_WARNINGS = -Wall -Wextra -Wpedantic
 else
 CXX_WARNINGS =
 endif
+
 ifeq ($(WARNINGS_AS_ERRORS), 1)
 CXX_WARNINGS += -Werror
 endif
 
-CXX_STANDARD = c++17
 CXX = g++
+CXX_STANDARD = c++17
 CXXFLAGS = $(CXX_WARNINGS) -std=$(CXX_STANDARD)
 CPPFLAGS = -I $(INCLUDE_DIR)
 LDFLAGS =
@@ -29,21 +33,21 @@ CXXFLAGS += -O3
 EXECUTABLE_NAME = mainRelease
 endif
 
-CXX_COMPILER_CALL = $(CXX) $(CXXFLAGS) $(CPPFLAGS)
+COMPILER_CALL = $(CXX) $(CXXFLAGS) $(CPPFLAGS)
 
 CXX_SOURCES = $(wildcard $(SOURCE_DIR)/*.cc)
 CXX_OBJECTS = $(patsubst $(SOURCE_DIR)/%.cc, $(BUILD_DIR)/%.o, $(CXX_SOURCES))
 
-##############
-## TARGETS  ##
-##############
+###############
+## TARGETS   ##
+###############
 all: create build
 
 create:
 	@mkdir -p build
 
 build: $(CXX_OBJECTS)
-	$(CXX_COMPILER_CALL) $(CXX_OBJECTS) $(LDFLAGS) -o $(BUILD_DIR)/$(EXECUTABLE_NAME)
+	$(COMPILER_CALL) $(CXX_OBJECTS) -o $(BUILD_DIR)/$(EXECUTABLE_NAME)
 
 execute:
 	./$(BUILD_DIR)/$(EXECUTABLE_NAME)
@@ -55,10 +59,12 @@ clean:
 ##############
 ## PATTERNS ##
 ##############
+# $@: the file name of the target
+# $<: the name of the first dependency
 $(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.cc
-	$(CXX_COMPILER_CALL) -c $< -o $@
+	$(COMPILER_CALL) -c $< -o $@
 
 ###########
 ## PHONY ##
 ###########
-.PHONY: create build execute clean
+.PHONY: all create build execute clean
