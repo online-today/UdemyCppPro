@@ -2,34 +2,14 @@
 
 ## GCC/Clang Compiler Steps
 
-### Compilation Steps
+### Compilation (Assembling)
 
-1. Preprocessing
-2. Compilation
-3. Assembler
-4. Linking
-
-#### Preprocessing
-
-- Removes comments from the source code
-- Macro expansion
-- Expansion of header files
-- Command: g++ -E main.cc > main.i
-
-#### Compilation
-
-- Translates the preprocessing file into assembly language.
 - Checks the C/C++ language syntax for error
-- Command: g++ -S main.i
-- Produces: main.s
-
-#### Assembler
-
-- Translates the assembly code into low-level machine code
-- Command: g++ -c main.s
+- Generates object files
+- Command: g++ main.cc -c
 - Produces: main.o
 
-#### Linker
+### Linker
 
 - Linking all the source files together, that is all the other object codes in the project.
 - Generates the executable file
@@ -91,8 +71,8 @@ In terms of Make, a phony target is simply a target that is always out-of-date, 
 Create the executable in either Debug or Release mode.
 
 ```bash
-  make build COMPILATION_MODE=Debug # Build type is debug
-  make build COMPILATION_MODE=Release # Build type is release
+  make build DEBUG=0 # Build type is debug
+  make build DEBUG=1 # Build type is release
 ```
 
 ### Run the Executable
@@ -100,13 +80,13 @@ Create the executable in either Debug or Release mode.
 Run the executable in either Debug or Release mode.
 
 ```bash
-  make execute COMPILATION_MODE=Debug # Build type is debug
-make execute COMPILATION_MODE=Release # Build type is release
+  make execute DEBUG=0 # Build type is debug
+  make execute DEBUG=1 # Build type is release
 ```
 
 ### Variables of the Makefile Template
 
-- COMPILATION_MODE: Debug or Release
+- Debug Mode: 1 (True) or 0 (False)
 - ENABLE_WARNINGS: 1 (True) or 0 (False)
 - WARNINGS_AS_ERRORS: 1 (True) or 0 (False)
 - CPP_STANDARD: c++11, c++14, c++17, etc.
@@ -114,5 +94,5 @@ make execute COMPILATION_MODE=Release # Build type is release
 ### Important Shortcuts of the Makefile Template
 
 - ```$@```: the file name of the target
-- ```$<```: the name of the first ependency
+- ```$<```: the name of the first dependency
 - ```$^```: the names of all dependencies
