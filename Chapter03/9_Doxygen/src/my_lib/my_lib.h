@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * @brief Prints hello world the console.
+ * @brief Prints out hello world to the console
  *
  */
 void print_hello_world();

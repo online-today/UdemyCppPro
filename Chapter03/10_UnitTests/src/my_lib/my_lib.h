@@ -1,16 +1,15 @@
 #pragma once
 
 /**
- * @brief Prints hello world the console.
+ * @brief Prints out hello world to the console
  *
  */
 void print_hello_world();
 
-
 /**
- * @brief Compute n faculty (n!)
+ * @brief Computes n!
  *
- * @param number Input number n
- * @return Faculty of n
+ * @param number: n
+ * @return n!
  */
-unsigned int factorial(unsigned int number);
+std::uint32_t factorial(std::uint32_t number);
